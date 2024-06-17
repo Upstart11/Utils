@@ -4,7 +4,7 @@
 SESSION_NAME="comfy_session"
 
 # Check if any process named 'python3' is running
-if pgrep -x "python3" > /dev/null
+if pgrep -x "python3" > /dev/null || pgrep -x "pt_main_thread" > /dev/null
 then
     echo "python3 is running"
 else
@@ -18,6 +18,7 @@ else
     else
         echo "tmux session $SESSION_NAME does not exist. Creating a new session and starting startcomfy."
         # Create a new tmux session and run the command
-        tmux new-session -d -s $SESSION_NAME 'startcomfy'
+        tmux new-session -d -s $SESSION_NAME
+        tmux send-keys -t $SESSION_NAME 'startcomfy' C-m
     fi
 fi
